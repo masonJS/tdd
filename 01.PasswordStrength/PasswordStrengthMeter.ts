@@ -5,16 +5,31 @@ export class PasswordStrengthMeter {
     if (this.meetsEmptyString(s)) {
       return PasswordStrength.INVALID;
     }
-    if (s.length < 8) {
-      return PasswordStrength.NORMAL;
+    const meetCount = this.getMeetCounts(s);
+
+    if (meetCount <= 1) {
+      return PasswordStrength.WEEK;
     }
-    if (!this.meetsContainingNumber(s)) {
-      return PasswordStrength.NORMAL;
-    }
-    if (!this.meetsContainUppercase(s)) {
+    if (meetCount === 2) {
       return PasswordStrength.NORMAL;
     }
     return PasswordStrength.STRONG;
+  }
+
+  private getMeetCounts(s: string) {
+    let meetCount = 0;
+
+    if (s.length >= 8) {
+      meetCount++;
+    }
+    if (this.meetsContainingNumber(s)) {
+      meetCount++;
+    }
+    if (this.meetsContainUppercase(s)) {
+      meetCount++;
+    }
+
+    return meetCount;
   }
 
   private meetsContainingNumber(s: string) {
