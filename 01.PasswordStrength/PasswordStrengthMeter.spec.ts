@@ -25,4 +25,10 @@ describe('암호 검사기', () => {
     const result = meter.meter('qwerasdf1');
     expect(result).toBe(PasswordStrength.NORMAL);
   })
+
+  it('빈 문자열인 경우 INVALID를 반환한다.', () => {
+    const meter = new PasswordStrengthMeter();
+    const result = meter.meter('');
+    expect(result).toBe(PasswordStrength.INVALID);
+  })
 })

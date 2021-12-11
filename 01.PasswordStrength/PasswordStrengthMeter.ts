@@ -2,6 +2,9 @@ import { PasswordStrength } from "./PasswordStrength";
 
 export class PasswordStrengthMeter {
   meter(s: string): PasswordStrength {
+    if (this.meetsEmptyString(s)) {
+      return PasswordStrength.INVALID;
+    }
     if (s.length < 8) {
       return PasswordStrength.NORMAL;
     }
@@ -20,5 +23,9 @@ export class PasswordStrengthMeter {
 
   private meetsContainUppercase(s: string) {
     return /[A-Z]/.test(s);
+  }
+
+  private meetsEmptyString(s: string) {
+    return !s || s.length === 0;
   }
 }
