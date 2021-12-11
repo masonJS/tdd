@@ -7,4 +7,8 @@ describe('암호 검사기', () => {
     const result = meter.meter('1q2w3e4r!');
     expect(result).toBe(PasswordStrength.STRONG)
   })
+
+  it('길이가 8글자 미만이고 나머지 조건을 모두 충족한다.', () => {
+    
+  })
 })
