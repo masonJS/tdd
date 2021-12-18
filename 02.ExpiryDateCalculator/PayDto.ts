@@ -1,39 +1,34 @@
 import { LocalDate } from "@js-joda/core";
 
 export class PayDto {
-  _billingDate: LocalDate;
-  _payAmount: Number;
-
-  constructor(builder: PayDtoBuilder){
-    this._billingDate = builder._billingDate;
-    this._payAmount = builder._payAmount;
-  }
-
-  get billingDate(): LocalDate {
-    return this._billingDate;
-  }
-
-  get payAmount(): Number {
-    return this._payAmount;
-  }
+  firstBillingDate: LocalDate | undefined;
+  billingDate!: LocalDate;
+  payAmount!: Number;
 }
 
 export class PayDtoBuilder {
-  _billingDate!: LocalDate;
-  _payAmount!: Number;
+  payDto: PayDto
 
+  constructor() {
+    this.payDto = new PayDto();
+  }
+
+  firstBillingDate(value: LocalDate){
+    this.payDto.firstBillingDate = value;
+    return this;
+  }
 
   billingDate(value: LocalDate){
-    this._billingDate = value;
+    this.payDto.billingDate = value;
     return this;
   }
 
   payAmount(value: number) {
-    this._payAmount = value;
+    this.payDto.payAmount = value;
     return this;
   }
 
   build() {
-    return new PayDto(this);
+    return this.payDto
   }
 }
