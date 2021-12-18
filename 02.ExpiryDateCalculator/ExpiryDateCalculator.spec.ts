@@ -1,5 +1,6 @@
 import { LocalDate } from "@js-joda/core";
 import { ExpiryDateCalculator } from "./ExpiryDateCalculator";
+import { PayDtoBuilder } from "./PayDto";
 
 describe('만료일 계산기', () => {
   it.each([
@@ -10,7 +11,8 @@ describe('만료일 계산기', () => {
   ])('만원을 납부하면 한달뒤가 만료일이 된다.', (billingDate, expiryDate) => {
     const payAmount = 10000;
     const cal = new ExpiryDateCalculator();
-    const result = cal.calculateExpiryDate(billingDate, payAmount);
+    const payDto = new PayDtoBuilder().billingDate(billingDate).payAmount(payAmount).build();
+    const result = cal.calculateExpiryDate(payDto);
     expect(result).toStrictEqual(expiryDate);
   })
 })

@@ -1,7 +1,8 @@
 import { LocalDate } from "@js-joda/core";
+import { PayDto } from "./PayDto";
 
 export class ExpiryDateCalculator {
-  calculateExpiryDate(billingDate: LocalDate, payAmount: number): LocalDate {
-    return billingDate.plusMonths(1);
+  calculateExpiryDate(payDto: PayDto): LocalDate {
+    return payDto.billingDate.plusMonths(1);
   }
 }
