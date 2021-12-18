@@ -7,7 +7,9 @@ export class ExpiryDateCalculator {
     if (payDto.firstBillingDate !== undefined) {
       const candidateExp = payDto.billingDate.plusMonths(addedMonths);
       if (payDto.firstBillingDate.dayOfMonth() !== candidateExp.dayOfMonth()) {
-        return candidateExp.withDayOfMonth(payDto.firstBillingDate.dayOfMonth())
+        return candidateExp.withDayOfMonth(
+          payDto.firstBillingDate.dayOfMonth()
+        );
       }
     }
 

@@ -7,18 +7,18 @@ export class PayDto {
 }
 
 export class PayDtoBuilder {
-  payDto: PayDto
+  payDto: PayDto;
 
   constructor() {
     this.payDto = new PayDto();
   }
 
-  firstBillingDate(value: LocalDate){
+  firstBillingDate(value: LocalDate) {
     this.payDto.firstBillingDate = value;
     return this;
   }
 
-  billingDate(value: LocalDate){
+  billingDate(value: LocalDate) {
     this.payDto.billingDate = value;
     return this;
   }
@@ -29,6 +29,6 @@ export class PayDtoBuilder {
   }
 
   build() {
-    return this.payDto
+    return this.payDto;
   }
 }

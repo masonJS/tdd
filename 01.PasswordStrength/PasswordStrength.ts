@@ -3,5 +3,4 @@ export enum PasswordStrength {
   WEEK,
   NORMAL,
   STRONG,
-
 }
