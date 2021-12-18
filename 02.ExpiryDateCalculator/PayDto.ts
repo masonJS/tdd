@@ -3,7 +3,7 @@ import { LocalDate } from "@js-joda/core";
 export class PayDto {
   firstBillingDate: LocalDate | undefined;
   billingDate!: LocalDate;
-  payAmount!: Number;
+  payAmount!: number;
 }
 
 export class PayDtoBuilder {

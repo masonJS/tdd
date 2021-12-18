@@ -22,4 +22,11 @@ describe('만료일 계산기', () => {
     const result = cal.calculateExpiryDate(payDto);
     expect(result).toStrictEqual(LocalDate.of(2019, 3, 30))
   })
+
+  it.each([[LocalDate.of(2019,3,1), 20000, LocalDate.of(2019, 5, 1)], [LocalDate.of(2019,3,1), 30000, LocalDate.of(2019, 6, 1)]] as const)('2만원 이상 납부하면 비례해서 만료일을 계산한다.', (billingDate, payAmount, expiryDate ) => {
+    const cal = new ExpiryDateCalculator();
+    const payDto = new PayDtoBuilder().billingDate(billingDate).payAmount(payAmount).build();
+    const result = cal.calculateExpiryDate(payDto);
+    expect(result).toStrictEqual(expiryDate)
+  })
 })
