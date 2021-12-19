@@ -21,8 +21,7 @@ describe("만료일 계산기", () => {
     }
   );
 
-  // 첫 납부일과 만료일의 일자가 같지 않을때 만원을 납부하면 첫 납부일 기준으로 다음 만료일 정함
-  it("첫 납부일과 만료일자가 다르면 만원을 납부한다.", () => {
+  it("첫 납부일과 만료일의 일자가 같지 않을때 만원을 납부하면 첫 납부일 기준으로 다음 만료일 정함", () => {
     const cal = new ExpiryDateCalculator();
     const payDto = new PayDtoBuilder()
       .firstBillingDate(LocalDate.of(2019, 1, 30))
@@ -48,4 +47,15 @@ describe("만료일 계산기", () => {
       expect(result).toStrictEqual(expiryDate);
     }
   );
+
+  it("첫 납부일과 만료일의 일자가 같지 않을때 2만원을 납부하면 첫 납부일 기준으로 다음 만료일 정함", () => {
+    const cal = new ExpiryDateCalculator();
+    const payDto = new PayDtoBuilder()
+      .firstBillingDate(LocalDate.of(2019, 1, 31))
+      .billingDate(LocalDate.of(2019, 2, 28))
+      .payAmount(20000)
+      .build();
+    const result = cal.calculateExpiryDate(payDto);
+    expect(result).toStrictEqual(LocalDate.of(2019, 4, 30));
+  });
 });
