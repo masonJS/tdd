@@ -5,19 +5,23 @@ export class ExpiryDateCalculator {
   calculateExpiryDate(payDto: PayDto): LocalDate {
     const addedMonths = payDto.payAmount / 10000;
     if (payDto.firstBillingDate !== undefined) {
-      const candidateExp = payDto.billingDate.plusMonths(addedMonths);
-      if (payDto.firstBillingDate.dayOfMonth() !== candidateExp.dayOfMonth()) {
-        if (
-          candidateExp.lengthOfMonth() < payDto.firstBillingDate.dayOfMonth()
-        ) {
-          return candidateExp.withDayOfMonth(candidateExp.lengthOfMonth());
-        }
-        return candidateExp.withDayOfMonth(
-          payDto.firstBillingDate.dayOfMonth()
-        );
-      }
+      return this.expiryDateUsingFirstBillingDate(payDto, addedMonths);
+    } else {
+      return payDto.billingDate.plusMonths(addedMonths);
     }
+  }
 
-    return payDto.billingDate.plusMonths(addedMonths);
+  expiryDateUsingFirstBillingDate(payDto: PayDto, addedMonths: number) {
+    const candidateExp = payDto.billingDate.plusMonths(addedMonths);
+    const dayOfFirstBilling = payDto.firstBillingDate!.dayOfMonth();
+    if (dayOfFirstBilling !== candidateExp.dayOfMonth()) {
+      const dayLengthOfCandiMonth = candidateExp.lengthOfMonth();
+      if (dayLengthOfCandiMonth < dayOfFirstBilling) {
+        return candidateExp.withDayOfMonth(dayLengthOfCandiMonth);
+      }
+      return candidateExp.withDayOfMonth(dayOfFirstBilling);
+    } else {
+      return candidateExp;
+    }
   }
 }
