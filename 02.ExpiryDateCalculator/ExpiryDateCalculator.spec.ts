@@ -1,6 +1,6 @@
 import { LocalDate } from "@js-joda/core";
 import { ExpiryDateCalculator } from "./ExpiryDateCalculator";
-import { PayDtoBuilder } from "./PayDto";
+import { PayDto, PayDtoBuilder } from "./PayDto";
 
 describe("만료일 계산기", () => {
   it.each([
@@ -57,5 +57,15 @@ describe("만료일 계산기", () => {
       .build();
     const result = cal.calculateExpiryDate(payDto);
     expect(result).toStrictEqual(LocalDate.of(2019, 4, 30));
+  });
+
+  it("10만월을 납부하면 1년 서비스를 제공한다.", () => {
+    const cal = new ExpiryDateCalculator();
+    const payDto = new PayDtoBuilder()
+      .billingDate(LocalDate.of(2019, 1, 28))
+      .payAmount(100000)
+      .build();
+    const result = cal.calculateExpiryDate(payDto);
+    expect(result).toStrictEqual(LocalDate.of(2020, 1, 28));
   });
 });

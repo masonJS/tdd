@@ -3,7 +3,10 @@ import { PayDto } from "./PayDto";
 
 export class ExpiryDateCalculator {
   calculateExpiryDate(payDto: PayDto): LocalDate {
-    const addedMonths = payDto.payAmount / 10000;
+    const addedMonths =
+      payDto.payAmount >= 100000
+        ? (payDto.payAmount / 100000) * 12 + (payDto.payAmount % 100000)
+        : payDto.payAmount / 10000;
     if (payDto.firstBillingDate !== undefined) {
       return this.expiryDateUsingFirstBillingDate(payDto, addedMonths);
     } else {
